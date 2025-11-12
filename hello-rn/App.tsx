@@ -13,11 +13,19 @@ import {
 
 type MealListItem = {
   idMeal: string;
-  strMeal: string; 
-  strMealThumb: string; 
+  strMeal: string;
+  strMealThumb: string;
 };
 
+// Endpoint: Receitas de Frutos do Mar (Seafood)
 const API_URL = "https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood";
+
+// Cores para o Tema Escuro
+const COLOR_PRIMARY_DARK = "#014572"; // Fundo Azul Marinho
+const COLOR_SURFACE_DARK = "#002b47ff"; // Cards e Superfícies escuras
+const COLOR_INPUT_DARK = "#002b47ff"; // Fundo do Input
+const COLOR_TEXT_LIGHT = "#FFFFFF"; // Texto Principal
+const COLOR_TEXT_MUTED = "#B0B0B0"; // Texto Secundário
 
 export default function App() {
   const [meals, setMeals] = useState<MealListItem[]>([]);
@@ -57,12 +65,10 @@ export default function App() {
     meal.strMeal.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
- 
   if (isLoading && meals.length === 0) {
     return (
       <SafeAreaView style={styles.center}>
-        {/* ActivityIndicator em branco */}
-        <ActivityIndicator size="large" color="#FFFFFF" /> 
+        <ActivityIndicator size="large" color={COLOR_TEXT_LIGHT} /> 
         <Text style={styles.centerText}>Carregando receitas de frutos do mar...</Text>
       </SafeAreaView>
     );
@@ -79,9 +85,8 @@ export default function App() {
     );
   }
 
-
   const renderItem = ({ item }: { item: MealListItem }) => (
-    <View style={styles.mealCard}> 
+    <View style={styles.mealCard}>
       <Image 
         source={{ uri: item.strMealThumb }} 
         style={styles.mealImage} 
@@ -96,7 +101,6 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header em branco*/}
       <Text style={styles.header}>Catálogo de Frutos do Mar</Text>
       
       <TextInput
@@ -104,7 +108,7 @@ export default function App() {
         value={searchQuery}
         onChangeText={setSearchQuery}
         style={styles.input}
-        placeholderTextColor="#888"
+        placeholderTextColor={COLOR_TEXT_MUTED}
       />
 
       <FlatList
@@ -120,53 +124,50 @@ export default function App() {
   );
 }
 
-// 7. Estilos (Styles)
 const styles = StyleSheet.create({
     container: { 
         flex: 1, 
-        backgroundColor: "#014572", 
+        backgroundColor: COLOR_PRIMARY_DARK,
         paddingTop: 10,
     },
     center: { 
         flex: 1, 
         justifyContent: "center", 
         alignItems: "center",
-        backgroundColor: "#014572", 
+        backgroundColor: COLOR_PRIMARY_DARK,
     },
     header: {
         fontSize: 24,
         fontWeight: '700',
         textAlign: 'center',
         paddingVertical: 15,
-        backgroundColor: '#FFFFFF', 
+        backgroundColor: COLOR_SURFACE_DARK, 
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#B0C4DE',
-        color: '#014572', 
+        borderBottomColor: COLOR_INPUT_DARK,
+        color: COLOR_TEXT_LIGHT,
     },
-
     centerText: { 
-        color: "#FFFFFF",
+        color: COLOR_TEXT_LIGHT,
         marginTop: 15,
         fontSize: 16,
         textAlign: 'center',
         padding: 20,
     },
-   
     mutedText: { 
-        color: "#E0E0E0", 
+        color: COLOR_TEXT_MUTED, 
         marginTop: 15,
         fontSize: 16,
         textAlign: 'center',
         padding: 20,
     },
     errorText: {
-        color: '#FFD700', 
+        color: '#FFD700', // Dourado para contraste de erro
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 20,
     },
     retryButton: {
-        backgroundColor: '#00BCD4', 
+        backgroundColor: '#00BCD4',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -181,16 +182,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginTop: 15,
         marginBottom: 10,
-        backgroundColor: "#FFFFFF", 
+        backgroundColor: COLOR_INPUT_DARK, 
         padding: 12,
         borderRadius: 10, 
         borderColor: "#ADD8E6",
         borderWidth: 1,
         fontSize: 16,
+        color: COLOR_TEXT_LIGHT, 
     },
     mealCard: {
         flexDirection: 'row',
-        backgroundColor: "#FFFFFF", 
+        backgroundColor: COLOR_SURFACE_DARK, 
         marginHorizontal: 16,
         marginVertical: 8,
         padding: 10,
@@ -214,11 +216,11 @@ const styles = StyleSheet.create({
     mealTitle: { 
         fontWeight: "600", 
         fontSize: 17,
-        color: '#333',
+        color: COLOR_TEXT_LIGHT, 
         marginBottom: 4,
     },
     mealId: { 
-        color: "#999",
+        color: COLOR_TEXT_MUTED, 
         fontSize: 12,
         fontStyle: 'italic',
     },
